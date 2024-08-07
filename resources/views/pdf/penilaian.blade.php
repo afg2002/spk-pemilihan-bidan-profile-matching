@@ -6,23 +6,59 @@
     <title>Hasil Perhitungan Profile Matching</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
         }
         h1, h2, h3 {
-            color: #333;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2 {
+            font-size: 22px;
+            text-transform: uppercase;
+            margin-top: 40px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-transform: capitalize;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
         }
         th, td {
             border: 1px solid #ccc;
-            padding: 8px;
+            padding: 12px;
             text-align: center;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #4a5568;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #e2e8f0;
+        }
+        tbody tr:hover {
+            background-color: #cbd5e0;
         }
         .bg-green-100 {
             background-color: #d4edda;
@@ -36,10 +72,38 @@
         .text-red-800 {
             color: #721c24;
         }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+        .header h2 {
+            margin: 5px 0;
+            font-size: 20px;
+            color: #1a202c;
+            font-weight: normal;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            color: #2d3748;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>Hasil Perhitungan Profile Matching</h1>
+    <div class="header">
+        <img src="{{ public_path('assets/logo.png') }}" alt="Logo" width="80px">
+        <h1>Sistem Pendukung Keputusan Rekrutmen Bidan Metode Profile Matching</h1>
+        <br>
+        <br>
+        <h1 class="text-center">Hasil Perhitungan Profile Matching</h1>
+    </div>
 
     @foreach($hasilPerKriteria as $kriteriaId => $kriteriaData)
         <div>
@@ -223,3 +287,5 @@
             @endforeach
         </tbody>
     </table
+</body>
+</html>

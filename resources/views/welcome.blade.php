@@ -5,9 +5,9 @@
 @section('content')
 <div class="flex flex-col items-center justify-center mt-10">
     <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 max-w-2xl w-full text-center">
-        <h1 class="text-3xl font-bold mb-4 text-gray-800">Selamat Datang di Sistem Pakar Rekrutmen Bidan</h1>
+        <h1 class="text-3xl font-bold mb-4 text-gray-800">Selamat Datang di Sistem Pendukung Keputusan Rekrutmen Bidan dengan Metode Profile Matching</h1>
         <p class="text-gray-600 text-lg mb-6">
-            Optimalkan proses rekrutmen bidan Anda dengan sistem pakar berbasis metode Profile Matching. 
+            Optimalkan proses rekrutmen bidan Anda dengan sistem pendukung keputusan berbasis metode Profile Matching. 
             Kami memadukan teknologi dan keahlian untuk membantu Anda menemukan kandidat terbaik yang 
             sesuai dengan kebutuhan spesifik institusi kesehatan Anda.
         </p>

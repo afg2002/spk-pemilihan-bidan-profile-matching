@@ -20,5 +20,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password'=> bcrypt('admin'),
         ]);
+
+        // Menjalankan semua seeder yang telah Anda buat
+        $this->call([
+            KriteriaSeeder::class,
+            SubkriteriaSeeder::class,
+            // PenilaiansSeeder::class,
+            // DetailPenilaiansSeeder::class,
+        ]);
+        
     }
 }
