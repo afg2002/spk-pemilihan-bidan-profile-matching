@@ -206,13 +206,24 @@ class PenilaianController extends Controller
 public function generateCandidatesReport()
 {
     // Retrieve all candidates from the penilaian table
-    $candidates = Penilaian::all();
+    $penilaians = Penilaian::with('detailPenilaians.subkriteria.kriteria')->get();
+        
+    $hasilPenilaians = $penilaians->map(function ($penilaian) {
+            return [
+                'penilaian' => $penilaian,
+                'hasil' => $this->hitungProfileMatching($penilaian)
+            ];
+        });
+
+    $rankingKandidat = $hasilPenilaians->sortByDesc(function ($item) {
+            return $item['hasil']['nilai_akhir'];
+        })->values();    
 
     // Generate filename based on current date and time
     $filename = 'laporan_kandidat_' . Carbon::now()->format('d-m-Y_His') . '.pdf';
 
     // Load the view and pass the candidates data
-    $pdf = Pdf::loadView('pdf.candidates', compact('candidates'));
+    $pdf = Pdf::loadView('pdf.candidates', compact('rankingKandidat'));
 
     // Download the PDF with the timestamped filename
     return $pdf->download($filename);

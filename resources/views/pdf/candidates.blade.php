@@ -1,123 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Kandidat</title>
+    <title>Laporan Kandidat Bidan</title>
     <style>
         body {
-            font-family: 'Helvetica', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             color: #333;
             line-height: 1.6;
         }
         .container {
-            padding: 40px;
+            max-width: 800px;
             margin: 0 auto;
-            width: 90%;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .header {
-            text-align: center;
-            margin-bottom: 40px;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
         }
         .header img {
-            width: 80px;
-            margin-bottom: 10px;
+            width: 60px;
+            margin-right: 20px;
         }
-        .header h2 {
-            margin: 5px 0;
-            font-size: 20px;
-            color: #1a202c;
-            font-weight: normal;
+        .header-text {
+            flex-grow: 1;
         }
-        .header h1 {
+        .header-text h1 {
             margin: 0;
-            font-size: 26px;
-            color: #2d3748;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 22px;
+            color: #333;
             font-weight: bold;
         }
-        .line {
-            border-bottom: 2px solid #333;
-            margin-top: 10px;
-            margin-bottom: 30px;
-            width: 100px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #2d3748;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-top: 0;
+        .header-text h2 {
+            margin: 5px 0 0;
+            font-size: 18px;
+            color: #666;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 30px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-            border-radius: 5px;
-            overflow: hidden;
+            margin-top: 20px;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center; /* Center-align text in table cells */
+            padding: 10px;
+            text-align: left;
         }
         th {
-            background-color: #4a5568;
-            color: #fff;
+            background-color: #f2f2f2;
             font-weight: bold;
-            text-transform: uppercase;
-        }
-        tbody tr:nth-child(even) {
-            background-color: #e2e8f0;
-        }
-        tbody tr:hover {
-            background-color: #cbd5e0;
         }
         .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #718096;
+            margin-top: 30px;
+            text-align: right;
+            font-size: 14px;
+        }
+        .signature {
             margin-top: 50px;
+            text-align: right;
+        }
+        .signature-line {
+            display: inline-block;
+            width: 200px;
+            border-top: 1px solid #333;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ public_path('assets/logo.png') }}" alt="Logo" width="80px">
-            <h1>Sistem Pendukung Keputusan Rekrutmen Bidan</h1>
-            <h2>Metode Profile Matching</h2>
-            <div class="line"></div>
+            <img src="{{ public_path('assets/logo.png') }}" alt="Logo" style="width:150px;height:150px">
+            <div class="header-text">
+                <h1>Sistem Pendukung Keputusan Rekrutmen Bidan</h1>
+                <h2>Metode Profile Matching</h2>
+            </div>
         </div>
 
-        <h1 class="title">Laporan Pelamar</h1>
         <table>
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Nama Kandidat</th>
+                    <th>Nilai Profile Matching</th>
+                    <th>Ranking</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($candidates as $candidate)
-                    <tr>
-                        <td>{{ $candidate->nama_kandidat }}</td>
-                    </tr>
-                @endforeach
+                @foreach($rankingKandidat as $index => $item)
+                @php
+                    $keputusanClass = $index === 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                @endphp
+                <tr>
+                    <td class="border border-gray-300 px-4 py-2">{{ $index + 1 }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $item['penilaian']->nama_kandidat }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ number_format($item['hasil']['nilai_akhir'], 2) }}</td>
+                    <td class="border border-gray-300 px-4 py-2 {{ $keputusanClass }}">
+                        {{ $index === 0 ? 'Diterima' : 'Ditolak' }}
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
 
         <div class="footer">
-            <p>© 2024 Sistem Pendukung Keputusan Rekrutmen Bidan. All rights reserved.</p>
+            <p>Depok, {{ now()->locale('id')->isoFormat('dddd D MMMM Y') }}</p>
+            <p>Ttd,</p>
+            <div class="signature-line"></div>
         </div>
     </div>
 </body>

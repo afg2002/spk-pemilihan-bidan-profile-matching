@@ -56,4 +56,5 @@
         <p>&copy; 2024 Sistem Pakar Rekrutmen Bidan. Hak Cipta Dilindungi.</p>
     </footer>
 </body>
+    @yield('script')
 </html>
