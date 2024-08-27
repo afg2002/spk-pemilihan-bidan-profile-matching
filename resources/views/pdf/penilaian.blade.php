@@ -276,13 +276,23 @@
         <tbody>
             @foreach($rankingKandidat as $index => $item)
                 @php
+                    $keputusan = $index === 0 ? 'Diterima' : 'Ditolak';
                     $keputusanClass = $index === 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                    
+                    // Adjust the display for different scenarios
+                    if (request()->route()->getName() === 'penilaian.pdf.accepted') {
+                        $keputusan = 'Diterima';
+                        $keputusanClass = 'bg-green-100 text-green-800';
+                    } elseif (request()->route()->getName() === 'penilaian.pdf.rejected') {
+                        $keputusan = 'Ditolak';
+                        $keputusanClass = 'bg-red-100 text-red-800';
+                    }
                 @endphp
                 <tr class="{{ $keputusanClass }}">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item['penilaian']->nama_kandidat }}</td>
                     <td>{{ number_format($item['hasil']['nilai_akhir'], 2) }}</td>
-                    <td>{{ $index === 0 ? 'Diterima' : 'Ditolak' }}</td>
+                    <td>{{ $keputusan }}</td>
                 </tr>
             @endforeach
         </tbody>

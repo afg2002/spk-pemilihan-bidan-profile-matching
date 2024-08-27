@@ -229,7 +229,7 @@ public function generateCandidatesReport()
     return $pdf->download($filename);
 }
 
-    public function generatePenilaianPdf()
+public function generatePenilaianPdf($status = 'all')
 {
     $penilaians = Penilaian::with('detailPenilaians.subkriteria.kriteria')->get();
     $kriterias = Kriteria::with('subkriterias')->get();
@@ -241,14 +241,21 @@ public function generateCandidatesReport()
         ];
     });
 
-    $hasilPerKriteria = $this->groupHasilByKriteria($hasilPenilaians, $kriterias);
-
     $rankingKandidat = $hasilPenilaians->sortByDesc(function ($item) {
         return $item['hasil']['nilai_akhir'];
     })->values();
 
-    // Generate filename based on current date and time
-    $filename = 'laporan_penilaian_' . Carbon::now()->format('d-m-Y_His') . '.pdf';
+    // Filter results based on status
+    if ($status === 'accepted') {
+        $rankingKandidat = $rankingKandidat->take(1); // Only the top candidate
+    } elseif ($status === 'rejected') {
+        $rankingKandidat = $rankingKandidat->slice(1); // All except the top candidate
+    }
+
+    $hasilPerKriteria = $this->groupHasilByKriteria($rankingKandidat, $kriterias);
+
+    // Generate filename based on current date and time and status
+    $filename = 'laporan_penilaian_' . $status . '_' . Carbon::now()->format('d-m-Y_His') . '.pdf';
 
     // Load the view and pass the candidates data
     $pdf = Pdf::loadView('pdf.penilaian', compact('hasilPerKriteria', 'rankingKandidat', 'kriterias'));
